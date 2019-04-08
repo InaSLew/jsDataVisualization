@@ -17,8 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
         req.onload = () => {
             const completeData = JSON.parse(req.responseText);
             const GDPData = completeData.data;
-            const svgW = 500, svgH = 600;
-            const scale = d3.scaleLinear()
+            const svgW = 900, svgH = 600;
+            const xScale = d3.scaleLinear()
+                             .domain([d3.min(GDPData, d => Date.parse(d[0])), d3.max(GDPData, d => Date.parse(d[0]))]).range([0, svgW])
+            const yScale = d3.scaleLinear()
+                             .domain([0, d3.max(GDPData, d => d[1])]).range([0, svgH])
+            const xAxis = d3.axisBottom(xScale);
+            const yAxis = d3.axisLeft(yScale);
             console.log(completeData);
             
             const svg = d3.select('body')
@@ -28,29 +33,28 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const title = d3.select('body')
             .append('h2')
-            .attr("id", "title")
-            .text("GDP Bar Chart")
+            .attr('id', 'title')
+            .text('United States GDP')
+
+            //xAxis
+            svg.append('g')
+               .attr('transform', )
             
             // Bar Chart & tooltip
             svg.selectAll('rect')
                .data(GDPData)
                .enter()
                .append('rect')
-               .attr("x", (d, i) => i * 30)
-               .attr("y", (d, i) => svgH - d[1])
-               .attr("width", 25)
-               .attr("height", d => d[1])
-               .attr("class", "bar")
-               .attr("data-date", d => d[0])
-               .attr("data-gdp", d => d[1])
-            
-            // Label
-            // svg.selectAll('text')
-            //    .data(GDPData)
-            //    .enter()
-            //    .append('text')
-            //    .attr('x', (d, i) => i * 30)
-            //    .attr('y', (d, i) => svgH - d[1] + 3)
-            //    .text(d => d[0])
+               .attr('x', (d, i) => xScale(Date.parse(d[0])))
+               .attr('y', (d, i) => svgH - yScale(d[1]))
+               .attr('width', svgW / GDPData.length)
+               .attr('height', d => d[1])
+               .attr('class', "bar")
+               .attr('data-date', d => d[0])
+               .attr('data-gdp', d => d[1])
+               .append('title')
+               .attr('id', 'tooltip')
+               .attr('data-date', d => d[0])
+               .text(d => `${d[0]}\n${d[1]}`)
         }
     });
