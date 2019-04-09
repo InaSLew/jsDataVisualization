@@ -24,11 +24,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     .append('div')
                     .attr('id', 'tooltip')
                     .attr('class', 'tooltip')
-                    .style('opacity', 0)
-                    .style('background-color', 'black')
-                    .style('border-radius', '5px')
-                    .style('padding', '10px')
-                    .style('color', 'white');
+        
+        // Functions to show and hide tooltip
+        const showTooltip = d => {
+            tooltip.transition().duration(200);
+            tooltip.style('opacity', 0.8)
+                .html(`${d[0]}<br>${d[1]}`)
+                .attr('data-date', d[0])
+                .style('left', `${d3.mouse(d3.event.currentTarget)[0] + 250}px`)
+                .style('top', `${d3.mouse(d3.event.currentTarget)[1] + 30}px`)
+        }
+        const moveTooltip = d => {
+            tooltip
+            .attr('data-date', d[0])
+            .style('left', `${d3.mouse(d3.event.currentTarget)[0] + 250}px`)
+            .style('top', `${d3.mouse(d3.event.currentTarget)[1] - 90}px`)
+        }
+        const hideTooltip = d => {
+            tooltip.transition().duration(200).style('opacity', 0);
+        }
 
         // Define a Chart
         const chart = svg.append('g')
@@ -63,17 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
             .attr('class', 'bar')
             .attr('data-date', d => d[0])
             .attr('data-gdp', d => d[1])
-            .on('mouseover', (d, i) => {
-                tooltip.transition().duration(200);
-                tooltip.style('opacity', 1)
-                    .html(`${d[0]}\n${d[1]}`)
-                    .style('left', (i * (width / GDPData.length)) + 30 + 'px')
-                    .style('top', height - 100 + 'px')
-                    .attr('data-date', d[0]);
-            })
-            .on('mouseout', d => {
-                tooltip.transition().duration(200).style('opacity', 0);
-            })
+            .on('mouseover', showTooltip)
+            .on('mousemove', moveTooltip)
+            .on('mouseout', hideTooltip);
         
         svg.append('text')
             .attr('id', 'title')
