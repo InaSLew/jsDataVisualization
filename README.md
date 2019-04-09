@@ -5,7 +5,7 @@ This repo contains my solutions to the projects that are required to claim [free
 The projects' demos live on Codepen.
 
 ## Status: In progress
-- [ ] Bar Chart
+- [x] Bar Chart
 - [ ] Scatterplot Graph
 - [ ] Heat Map
 - [ ] Choropleth Map
