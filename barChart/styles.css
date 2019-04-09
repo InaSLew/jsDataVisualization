@@ -1,7 +1,8 @@
-#bar-chart {
-    text-align: center;
+svg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
-
 .bar {
     fill: blue;
 }
