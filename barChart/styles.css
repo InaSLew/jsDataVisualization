@@ -4,7 +4,6 @@
 
 .bar {
     fill: blue;
-    border: while;
 }
 .bar:hover {
     fill: yellow;
