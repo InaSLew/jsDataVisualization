@@ -1,11 +1,3 @@
-/**
-* Todos
-* DONE! Display bar chart with date on the x-axis and GDP y-axis
-* [ ] Add scale
-* [ ] Add x-axis
-* [ ] Add y-axis
-*/
-
 document.addEventListener('DOMContentLoaded', () => {
     const req = new XMLHttpRequest();
     req.open(
@@ -17,11 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
         req.onload = () => {
             const completeData = JSON.parse(req.responseText);
             const GDPData = completeData.data;
-            const svgW = 900, svgH = 600;
+            const svgW = 1000, svgH = 500, padding = 5;
             const xScale = d3.scaleLinear()
-                             .domain([d3.min(GDPData, d => Date.parse(d[0])), d3.max(GDPData, d => Date.parse(d[0]))]).range([0, svgW])
+                             .domain([d3.min(GDPData, d => Date.parse(d[0])), d3.max(GDPData, d => Date.parse(d[0]))]).range([0, svgW - padding])
             const yScale = d3.scaleLinear()
-                             .domain([0, d3.max(GDPData, d => d[1])]).range([0, svgH])
+                             .domain([0, d3.max(GDPData, d => d[1])]).range([0, svgH - padding])
             const xAxis = d3.axisBottom(xScale);
             const yAxis = d3.axisLeft(yScale);
             console.log(completeData);
@@ -38,7 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             //xAxis
             svg.append('g')
-               .attr('transform', )
+               .attr('id', 'x-axis')
+               .attr('transform', `translate(0, ${svgH - 20})`)
+               .call(xAxis);
             
             // Bar Chart & tooltip
             svg.selectAll('rect')
