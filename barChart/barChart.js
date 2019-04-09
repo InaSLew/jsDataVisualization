@@ -8,12 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const GDPData = thejson.data;
         console.log(GDPData);
         
-        // Lay out canvas, padding, scales and axes
         const margin = 60;
         const width = 1000 - 2 * margin;
         const height = 600 - 2 * margin;
 
-        // Select svg element
+        // Create svg element
         const svg = d3.select('#data-viz')
             .append('svg')
             .attr('width', width + 2 * margin)
@@ -23,16 +22,16 @@ document.addEventListener('DOMContentLoaded', () => {
         let tooltip = d3.select('#data-viz')
                     .append('div')
                     .attr('id', 'tooltip')
-                    .attr('class', 'tooltip')
+                    .attr('class', 'tooltip');
         
-        // Functions to show and hide tooltip
+        // Functions to show, move and hide tooltip
         const showTooltip = d => {
             tooltip.transition().duration(200);
             tooltip.style('opacity', 0.8)
                 .html(`${d[0]}<br>${d[1]}`)
                 .attr('data-date', d[0])
                 .style('left', `${d3.mouse(d3.event.currentTarget)[0] + 250}px`)
-                .style('top', `${d3.mouse(d3.event.currentTarget)[1] + 30}px`)
+                .style('top', `${d3.mouse(d3.event.currentTarget)[1] + 90}px`)
         }
         const moveTooltip = d => {
             tooltip
@@ -40,9 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .style('left', `${d3.mouse(d3.event.currentTarget)[0] + 250}px`)
             .style('top', `${d3.mouse(d3.event.currentTarget)[1] - 90}px`)
         }
-        const hideTooltip = d => {
-            tooltip.transition().duration(200).style('opacity', 0);
-        }
+        const hideTooltip = d => tooltip.transition().duration(200).style('opacity', 0);
 
         // Define a Chart
         const chart = svg.append('g')
@@ -88,6 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .attr('text-anchor', 'middle')
             .style('font-size', 30)
             .style('font-family', 'Arial, Helvetica, sans-serif')
-            .text('United States GDP')
+            .text('United States GDP');
     });
 });
