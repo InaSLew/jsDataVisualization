@@ -41,5 +41,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 .attr('id', 'x-axis')
                 .attr('transform', `translate(0, ${height})`)
                 .call(d3.axisBottom(xScale).ticks(d3.timeYear));
+            
+            // Scatter plot starts here
+            chart.selectAll('circle')
+                .data(dataset)
+                .enter()
+                .append('circle')
+                .attr('class', 'dot')
+                .attr('data-xvalue', d => d.Year)
+                .attr('data-yvalue', d => getDateObj(d))
+                .attr('cx', d => xScale(new Date().setFullYear(d.Year)))
+                .attr('cy', d => yScale(getDateObj(d)))
+                .attr('r', '5px')
+            
+            // Add title and legend
+            chart.append('text')
+                .attr('id', 'title')
+                .attr('x', width / 2)
+                .attr('y', margin / 2)
+                .attr('text-anchor', 'middle')
+                .text('Doping among Professional Cyclists')
+            chart.append('text')
+                .attr('id', 'legend')
+                .attr('x', width / 2)
+                .attr('y', margin)
+                .attr('text-anchor', 'middle')
+                .text('35 fastest times up Alpe d\'Huez')
         })
 });
