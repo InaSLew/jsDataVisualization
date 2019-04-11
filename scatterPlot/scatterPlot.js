@@ -1,9 +1,9 @@
 const url = 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json';
 
-const getDateObj = (totalSeconds) => {
+const getDateObj = (cyclistObj) => {
     let dateObj = new Date(null);
-    let parsedSeconds = totalSeconds % 60;
-    let parsedMinutes = (totalSeconds - parsedSeconds) / 60;
+    let parsedSeconds = cyclistObj.Seconds % 60;
+    let parsedMinutes = (cyclistObj.Seconds - parsedSeconds) / 60;
     dateObj.setMinutes(parsedMinutes, parsedSeconds);
 
     return dateObj;
@@ -29,17 +29,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const yScale = d3.scaleTime()
                 .range([0, height])
-                .domain([d3.min(dataset, d => getDateObj(d.Seconds)), d3.max(dataset, d => getDateObj(d.Seconds))]);
+                .domain([d3.min(dataset, d => getDateObj(d)), d3.max(dataset, d => getDateObj(d))]);
             chart.append('g')
                 .attr('id', 'y-axis')
                 .call(d3.axisLeft(yScale).tickFormat(d3.timeFormat('%M:%S')));
             
-            const xScale = d3.scaleLinear()
+            const xScale = d3.scaleTime()
                 .range([0, width])
-                .domain([d3.min(dataset, d => d.Year), d3.max(dataset, d => d.Year)])
+                .domain([d3.min(dataset, d => new Date().setFullYear(d.Year)), d3.max(dataset, d => new Date().setFullYear(d.Year))]);
             chart.append('g')
                 .attr('id', 'x-axis')
                 .attr('transform', `translate(0, ${height})`)
-                .call(d3.axisBottom(xScale));
+                .call(d3.axisBottom(xScale).ticks(d3.timeYear));
         })
 });
