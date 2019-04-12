@@ -7,6 +7,6 @@ The projects' demos live on Codepen.
 ## Status: In progress
 - [x] Bar Chart
 - [x] Scatterplot Graph
-- [ ] Heat Map
+- [x] Heat Map
 - [ ] Choropleth Map
 - [ ] Treemap Diagram

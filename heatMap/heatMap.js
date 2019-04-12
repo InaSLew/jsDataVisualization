@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(url)
         .then(res => res.json())
         .then(rawdata => {
-            console.log(rawdata);
 
             const baseTemp = rawdata.baseTemperature,
                   dataset = rawdata.monthlyVariance,
@@ -13,7 +12,24 @@ document.addEventListener('DOMContentLoaded', () => {
                   height = 600 - 2 * margin,
                   formatMonth = d3.timeFormat('%B'),
                   allMonths = 12,
-                  legendColors = ['#ffffcc', '#ffeda0', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#bd0026', '#800026'];
+                  legendColors = ['#ffffcc', '#ffeda0', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#bd0026', '#800026']
+                  monthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Obtober', 'November', 'December'];
+
+            let tooltip = d3.select('#data-viz')
+                .append('div')
+                .attr('id', 'tooltip')
+                .attr('class', 'tooltip')
+
+            const showTooltip = d => {
+                tooltip.transition();
+                tooltip.style('opacity', 0.8)
+                    .html(`${d.year} - ${monthArr[d.month - 1]}<br >Temperature: ${Math.round((baseTemp + d.variance) * 100) / 100} &#8451;<br >Variance: ${d.variance} &#8451;`)
+                    .attr('data-year', d.year)
+                    .style('left', `${d3.mouse(d3.event.currentTarget)[0] + 120}px`)
+                    .style('top', `${d3.mouse(d3.event.currentTarget)[1] + 90}px`)
+            }
+
+            const hideTooltip = d => tooltip.transition().style('opacity', 0)
             
             const svg = d3.select('#data-viz')
                 .append('svg')
@@ -53,12 +69,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 .attr('y', d=> yScale(new Date().setMonth(d.month - 1)) - 16)
                 .attr('width', Math.floor(width / 263))
                 .attr('height', height / allMonths)
-                .attr('fill', d => colorScale(d.variance));
+                .attr('fill', d => colorScale(d.variance))
+                .on('mouseover', showTooltip)
+                .on('mouseout', hideTooltip);
 
             svg.append('text')
                 .attr('id', 'title')
                 .attr('x', (width + 2 * margin) / 2)
-                .attr('y', margin / 4)
+                .attr('y', margin / 3)
                 .attr('text-anchor', 'middle')
                 .text('Monthly Global Land-Surface Temperature')
             
@@ -67,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .attr('x', (width + 2 * margin) / 2)
                 .attr('y', margin / 1.2)
                 .attr('text-anchor', 'middle')
-                .text(`1753 - 2015: base temperature ${baseTemp}`)
+                .text(`1753 - 2015: base temperature ${baseTemp} °C`)
 
             svg.append('g')
                 .attr('id', 'legend')
