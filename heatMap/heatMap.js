@@ -1,4 +1,3 @@
-// legendColors = ['#ffffcc', '#ffeda0', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#bd0026', '#800026','#800026']
 const url = 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -59,9 +58,16 @@ document.addEventListener('DOMContentLoaded', () => {
             svg.append('text')
                 .attr('id', 'title')
                 .attr('x', (width + 2 * margin) / 2)
-                .attr('y', margin / 2)
+                .attr('y', margin / 4)
                 .attr('text-anchor', 'middle')
                 .text('Monthly Global Land-Surface Temperature')
+            
+            svg.append('text')
+                .attr('id', 'description')
+                .attr('x', (width + 2 * margin) / 2)
+                .attr('y', margin / 1.2)
+                .attr('text-anchor', 'middle')
+                .text(`1753 - 2015: base temperature ${baseTemp}`)
 
             svg.append('g')
                 .attr('id', 'legend')
