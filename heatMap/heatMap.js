@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   height = 600 - 2 * margin,
                   formatMonth = d3.timeFormat('%B'),
                   allMonths = 12,
-                  legendColors = ['#ffffcc', '#ffeda0', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#bd0026', '#800026','#800026'];
+                  legendColors = ['#ffffcc', '#ffeda0', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#bd0026', '#800026'];
             
             const svg = d3.select('#data-viz')
                 .append('svg')
@@ -62,6 +62,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 .attr('y', margin / 2)
                 .attr('text-anchor', 'middle')
                 .text('Monthly Global Land-Surface Temperature')
+
+            svg.append('g')
+                .attr('id', 'legend')
+                .selectAll('.legend')
+                .data([0].concat(colorScale.quantiles()), d => d)
+                .enter()
+                .append('g')
+                .attr('class', 'legend')
+                .append('rect')
+                .attr('x', (d, i) => i * margin / 2)
+                .attr('y', height + margin * 1.5)
+                .attr('width', 32)
+                .attr('height', (height / allMonths) * 2)
+                .style('fill', (d, i) => legendColors[i]);
 
         });
 });
