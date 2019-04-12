@@ -19,6 +19,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const width = 1000 - 2 * margin;
             const height = 600 - 2 * margin;
 
+            // Tooltip and show/hide functions
+            let tooltip = d3.select('#data-viz')
+                .append('div')
+                .attr('id', 'tooltip')
+                .attr('class', 'tooltip')
+            
+            const showTooltip = d => {
+                tooltip.transition().duration(200);
+                tooltip.style('opacity', 0.8)
+                    .html(`${d.Year}<br >${d.Name}(${d.Nationality}) : ${d.Time}<br >${d.Doping === '' ? '<div style="color:green;">Clean</div>' : '<div style="color:red;">' + d.Doping + '</div>' }`)
+                    .attr('data-year', d.Year)
+                    .style('left', `${d3.mouse(d3.event.currentTarget)[0] + 120}px`)
+                    .style('top', `${d3.mouse(d3.event.currentTarget)[1] + 90}px`)
+            }
+            const hideTooltip = d => tooltip.transition().duration(200).style('opacity', 0);
+
             const svg = d3.select('#data-viz')
                 .append('svg')
                 .attr('width', width + 2 * margin)
@@ -53,6 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 .attr('cx', d => xScale(new Date().setFullYear(d.Year)))
                 .attr('cy', d => yScale(getDateObj(d)))
                 .attr('r', '5px')
+                .on('mouseover', showTooltip)
+                .on('mouseout', hideTooltip);
             
             // Add title and legend
             chart.append('text')
