@@ -50,10 +50,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 .attr('data-month', d => d.month - 1)
                 .attr('data-year', d => d.year)
                 .attr('data-temp', d => d.variance)
-                .attr('x', d => xScale(new Date().setFullYear(d.year)))
-                .attr('y', d=> yScale(new Date().setMonth(d.month - 1)))
+                .attr('x', d => xScale(new Date().setFullYear(d.year)) + 1)
+                .attr('y', d=> yScale(new Date().setMonth(d.month - 1)) - 16)
                 .attr('width', Math.floor(width / 263))
                 .attr('height', height / allMonths)
-                .attr('fill', d => colorScale(d.variance))
+                .attr('fill', d => colorScale(d.variance));
+
+            svg.append('text')
+                .attr('id', 'title')
+                .attr('x', (width + 2 * margin) / 2)
+                .attr('y', margin / 2)
+                .attr('text-anchor', 'middle')
+                .text('Monthly Global Land-Surface Temperature')
+
         });
 });
