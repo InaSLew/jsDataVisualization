@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
                   width = 1300 - 2 * margin,
                   height = 600 - 2 * margin,
                   formatMonth = d3.timeFormat('%B'),
-                  allMonths = 12;
+                  allMonths = 12,
+                  legendColors = ['#ffffcc', '#ffeda0', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#bd0026', '#800026','#800026'];
             
             const svg = d3.select('#data-viz')
                 .append('svg')
@@ -37,6 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 .attr('transform', `translate(0, ${height})`)
                 .call(d3.axisBottom(xScale).ticks(d3.timeYear.every(10)));
 
+            const colorScale = d3.scaleQuantile()
+                .range(legendColors)
+                .domain([d3.min(dataset, d => d.variance), d3.max(dataset, d => d.variance)]);
+
             chart.selectAll('rect')
                 .data(dataset)
                 .enter()
@@ -49,5 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 .attr('y', d=> yScale(new Date().setMonth(d.month - 1)))
                 .attr('width', Math.floor(width / 263))
                 .attr('height', height / allMonths)
+                .attr('fill', d => colorScale(d.variance))
         });
 });
