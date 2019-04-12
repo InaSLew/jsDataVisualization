@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(url)
         .then(res => res.json())
         .then(dataset => {
-            console.log(dataset);
 
             const margin = 60;
             const width = 1000 - 2 * margin;
