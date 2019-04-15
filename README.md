@@ -10,3 +10,5 @@ The projects' demos live on Codepen.
 - [x] Heat Map
 - [x] Choropleth Map
 - [x] Treemap Diagram
+
+[View the certification here](https://www.freecodecamp.org/certification/inasl/data-visualization)
