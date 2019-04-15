@@ -8,5 +8,5 @@ The projects' demos live on Codepen.
 - [x] Bar Chart
 - [x] Scatterplot Graph
 - [x] Heat Map
-- [ ] Choropleth Map
+- [x] Choropleth Map
 - [ ] Treemap Diagram

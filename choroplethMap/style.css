@@ -1,6 +1,35 @@
+h1, p {
+  text-align: center;
+}
+
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
 svg {
     display: block;
     margin-left: auto;
     margin-right: auto;
     background-color:#efefef;
+}
+
+.tooltip {
+  width: 300px;
+  height: 20px;
+  opacity: 0;
+  background-color: black;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+  text-align: center;
+  position: absolute;
+  font-family: monospace;
+}
+
+.legendItem {
+  font-family: monospace;
 }
