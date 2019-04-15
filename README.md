@@ -4,9 +4,9 @@ This repo contains my solutions to the projects that are required to claim [free
 ## Format
 The projects' demos live on Codepen.
 
-## Status: In progress
+## Status: Complete
 - [x] Bar Chart
 - [x] Scatterplot Graph
 - [x] Heat Map
 - [x] Choropleth Map
-- [ ] Treemap Diagram
+- [x] Treemap Diagram

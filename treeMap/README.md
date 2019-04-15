@@ -2,4 +2,4 @@
 
 A treemap diagram built with D3.js
 
-<!-- [Live Demo](https://codepen.io/InaSL/full/xeLpZG) -->
+[Live Demo](https://codepen.io/InaSL/full/GLOKrG)
